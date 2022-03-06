@@ -28,7 +28,6 @@ public class DbManager {
     
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
         Connection connection = DriverManager.getConnection(url, username, pass);
-        System.out.println("Установлено соединение с БД.");
         return connection;
     }
 
@@ -59,38 +58,38 @@ public class DbManager {
             Logger.getLogger(DbManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public static void postTable() {
+    public static void postTables() {
         try {
             connection = getConnection();
             connection.setAutoCommit(false);
-            statement = connection.prepareStatement("");
-            statement.addBatch("");
-            statement.addBatch("");
-            statement.addBatch("");
+            statement = connection.createStatement();
+            statement.addBatch("INSERT INTO manufacturer (title, country) VALUES ('GARNIER', 'France')");
+            statement.addBatch("INSERT INTO manufacturer (title, country) VALUES ('SCHWARZKOPF', 'Germany')");
+            statement.addBatch("INSERT INTO manufacturer (title, country) VALUES ('NIVEA', 'Germany')");
             connection.commit();
         } catch (SQLException e){
-            System.out.println(e);
+            e.printStackTrace();
             try {
                 connection.rollback();
             } catch (SQLException ex) {
-                Logger.getLogger(DbManager.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
             }
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DbManager.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         } finally {
             if(statement != null) {
                 try {
                     statement.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(DbManager.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             }
             if(connection != null) {
                 try {
                     connection.setAutoCommit(true);
                     connection.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(DbManager.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             }
         }
