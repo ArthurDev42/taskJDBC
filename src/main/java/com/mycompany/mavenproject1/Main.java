@@ -5,62 +5,24 @@
 package com.mycompany.mavenproject1;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-/**
- *
- * @author arthur
- */
+
 public class Main {
         
     public static void main(String[] args) {
-        
-        System.out.println("VE \"VEVE!\"");
-        DbManager.postTables();
-        
-        
-        
-        
-        
-    }
-    
-    public static void pum() {
+        Connection connection = DbManager.getConnection();
+        // DbManager.createTables(connection);
+        // DbManager.postTablesTestData(connection);
+        String s1 = "SELECT souvenirs.title, manufacturer.title FROM "
+                + "manufacturer INNER JOIN souvenirs ON manufacturer.id = souvenirs.manufacturer_id";
+        String s = "select souvenirs.* from souvenirs inner join manufacturer on manufacturer.id = souvenirs.manufacturer_id where manufacturer.country = 'France';";
+        // Вывести информацию о сувенирах, произведенных в заданной стране.
+//        List<Souvenirs> list = DbManager.getSouvenirsListByManufacturer("data");
         
         
-        try {
-            DbManager.createTables();
-        } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-//        try (Connection connection = DbManager.getConnection()) {
-//            Statement statement = connection.createStatement();
-//            PreparedStatement foo;
-//            String sql = "SELECT * FROM ALL;";
-//            ResultSet resultSet = statement.executeQuery(sql);
-//            List<Object> listik = new ArrayList();
-//            while (resultSet.next()) {
-//                
-//                int id = resultSet.getInt(1);
-//                if(id == 1) {
-//                   resultSet.updateInt("1", "2"); 
-//                   resultSet.updateBow();
-//                }
-//                
-//                String s = resultSet.getString(2);
-//                listik.add(new Object(id, s));
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        List<Souvenirs> lists = DbManager.getSouvenirsListByCountry("France", connection);
+        System.out.println(lists.toString());
+        DbManager.closeConnection(connection);
     }
 }
