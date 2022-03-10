@@ -8,8 +8,14 @@ import java.io.Serializable;
 
 public class Manufacturer implements Serializable {
     private int id;
-    private String name;
+    private String title;
     private String country;
+
+    Manufacturer(int id, String title, String country) {
+        this.id = id;
+        this.title = title;
+        this.country = country;
+    }
     
     public int getId() {
         return id;
@@ -19,12 +25,12 @@ public class Manufacturer implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String name) {
+        this.title = title;
     }
     
     public String getCountry() {
@@ -39,8 +45,8 @@ public class Manufacturer implements Serializable {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", title='" + title + '\'' +
                 ", country='" + country + '\'' +
-                '}';
+                '}' + "\n";
     }
 }

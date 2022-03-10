@@ -13,7 +13,7 @@ public class Souvenirs  implements Serializable {
     private String release_date;
     private int price;
     private int manufacturer_id;
-
+    
     Souvenirs(int id, String title, String manufacturer_data, String release_date, int price, int manufacturer_id) {
         this.id = id;
         this.title = title;
